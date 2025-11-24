@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stranger Things Makeover</title>
+    <title>Welcome to Hawkins Town</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
@@ -14,6 +14,7 @@
               'stranger-glow': '#ff3d57',
               'stranger-black': '#050505',
               'retro-blue': '#3A86FF',
+              'upside-down-grey': '#2D3748',
             },
             fontFamily: {
               serif: ['"Benguiat"', 'ITC Benguiat', 'Times New Roman', 'serif'],
@@ -23,10 +24,13 @@
             },
             animation: {
               'flicker': 'flicker 4s infinite',
-              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
               'crt-scan': 'scanline 8s linear infinite',
               'zoom-in': 'zoomIn 10s ease-out forwards',
               'float': 'float 6s ease-in-out infinite',
+              'drift': 'drift 20s linear infinite',
+              'noise': 'noise 0.2s infinite',
+              'glitch': 'glitch 1s linear infinite',
             },
             keyframes: {
               flicker: {
@@ -44,36 +48,88 @@
               float: {
                 '0%, 100%': { transform: 'translateY(0)' },
                 '50%': { transform: 'translateY(-10px)' }
+              },
+              drift: {
+                '0%': { backgroundPosition: '0% 0%' },
+                '100%': { backgroundPosition: '100% 100%' }
+              },
+              noise: {
+                '0%': { transform: 'translate(0,0)' },
+                '10%': { transform: 'translate(-5%,-5%)' },
+                '20%': { transform: 'translate(-10%,5%)' },
+                '30%': { transform: 'translate(5%,-10%)' },
+                '40%': { transform: 'translate(-5%,15%)' },
+                '50%': { transform: 'translate(-10%,5%)' },
+                '60%': { transform: 'translate(15%,0)' },
+                '70%': { transform: 'translate(0,10%)' },
+                '80%': { transform: 'translate(-15%,0)' },
+                '90%': { transform: 'translate(10%,5%)' },
+                '100%': { transform: 'translate(5%,0)' }
+              },
+              glitch: {
+                '2%, 64%': { transform: 'translate(2px,0) skew(0deg)' },
+                '4%, 60%': { transform: 'translate(-2px,0) skew(0deg)' },
+                '62%': { transform: 'translate(0,0) skew(5deg)' },
               }
             }
           },
         },
       }
     </script>
-    <!-- Import Google Fonts for specific aesthetics -->
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Rubik+Glitch&family=Creepster&family=Permanent+Marker&display=swap');
       
       body {
-        background-color: #050505;
+        /* Mottled Grey Background */
+        background-color: #1a1a1a;
         color: #e5e5e5;
         overflow-x: hidden;
+        
+        /* Texture layers */
+        background-image: 
+          /* Dark vignette edges */
+          radial-gradient(circle at center, transparent 0%, #000000 130%),
+          /* Random grey blotches */
+          radial-gradient(circle at 20% 30%, rgba(60, 60, 60, 0.4) 0%, transparent 40%),
+          radial-gradient(circle at 80% 70%, rgba(70, 70, 70, 0.3) 0%, transparent 40%),
+          radial-gradient(circle at 40% 80%, rgba(50, 50, 50, 0.5) 0%, transparent 30%),
+          /* Noise texture */
+          url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.15'/%3E%3C/svg%3E");
+        
+        background-size: cover, cover, cover, cover, 300px 300px;
+        background-blend-mode: multiply, screen, screen, screen, overlay;
+        
+        /* CRT Screen Curvature approximation */
+        box-shadow: inset 0 0 100px rgba(0,0,0,0.9);
+        min-height: 100vh;
       }
 
-      /* CRT Grain Effect */
-      .bg-grain {
+      /* TV Static Noise */
+      .bg-tv-static {
         position: fixed;
         top: 0;
         left: 0;
         width: 100%;
         height: 100%;
         pointer-events: none;
-        z-index: 0;
-        opacity: 0.03;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        z-index: 1;
+        opacity: 0.08;
+        background: repeating-radial-gradient(#000 0 0.0001%,#fff 0 0.0002%) 50% 0/2500px 2500px,
+                    repeating-conic-gradient(#000 0 0.0001%,#fff 0 0.0002%) 60% 60%/2500px 2500px;
+        background-blend-mode: difference;
+        animation: noise 0.2s infinite alternate;
+      }
+      
+      /* Vignette for Tube TV Look */
+      .tv-vignette {
+         position: fixed;
+         inset: 0;
+         pointer-events: none;
+         z-index: 50;
+         background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.4) 90%, rgba(0,0,0,0.8) 100%);
       }
 
-      /* Scanline Effect */
+      /* Scanlines */
       .scanlines {
         position: fixed;
         top: 0;
@@ -87,8 +143,8 @@
           rgba(0,0,0,0.1) 50%,
           rgba(0,0,0,0.1)
         );
-        background-size: 100% 4px;
-        z-index: 10;
+        background-size: 100% 3px;
+        z-index: 50;
         pointer-events: none;
       }
 
@@ -105,9 +161,35 @@
           0 0 20px black;
       }
       
-      .text-glow {
-        text-shadow: 0 0 10px currentColor;
+      .glitch-text {
+        position: relative;
       }
+      
+      .glitch-text::before,
+      .glitch-text::after {
+        content: attr(data-text);
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #050505;
+      }
+      
+      .glitch-text::before {
+        left: 2px;
+        text-shadow: -1px 0 #00ffff;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch 5s infinite linear alternate-reverse;
+      }
+      
+      .glitch-text::after {
+        left: -2px;
+        text-shadow: -1px 0 #ff00ff;
+        clip: rect(44px, 450px, 56px, 0);
+        animation: glitch 5s infinite linear alternate-reverse;
+      }
+
     </style>
   <script type="importmap">
 {

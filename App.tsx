@@ -5,6 +5,7 @@ import { ImageUploader } from './components/ImageUploader';
 import { LoadingScreen } from './components/LoadingScreen';
 import { ResultDisplay } from './components/ResultDisplay';
 import { ChristmasLights } from './components/ChristmasLights';
+import { CharacterSilhouettes } from './components/CharacterSilhouettes';
 import { AppStep, Scenario } from './types';
 import { generateMakeover } from './services/geminiService';
 
@@ -58,17 +59,18 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-stranger-black text-gray-200 font-sans selection:bg-red-900 selection:text-white flex flex-col relative overflow-hidden">
-      {/* Global Atmospherics */}
-      <div className="bg-grain"></div>
+    <div className="min-h-screen font-sans selection:bg-red-900 selection:text-white flex flex-col relative overflow-hidden bg-transparent">
+      {/* === Background Layers === */}
+      <div className="bg-tv-static"></div>
+      <div className="tv-vignette"></div>
       <div className="scanlines"></div>
       
-      {/* Red ambient glow at bottom */}
-      <div className="fixed bottom-0 left-0 right-0 h-64 bg-gradient-to-t from-red-900/10 to-transparent pointer-events-none z-0"></div>
+      {/* Character Silhouettes Layer - visible on home mostly */}
+      <CharacterSilhouettes />
 
       <Header />
 
-      <main className="flex-grow flex flex-col items-center justify-center p-4 relative z-10 w-full max-w-7xl mx-auto">
+      <main className="flex-grow flex flex-col items-center justify-center p-4 relative z-10 w-full max-w-7xl mx-auto pb-32">
         {error && (
             <div className="w-full max-w-2xl mb-8 p-4 border border-red-600 bg-red-950/80 text-red-200 font-mono text-center break-words shadow-[0_0_15px_rgba(220,38,38,0.3)] animate-pulse">
                 <span className="font-bold mr-2">ERROR CODE 11:</span> {error}
@@ -104,8 +106,8 @@ const App: React.FC = () => {
         )}
       </main>
 
-      <footer className="w-full py-8 text-center border-t border-zinc-900 mt-auto relative z-10 bg-black/80">
-        <p className="text-zinc-600 text-[10px] font-mono uppercase tracking-[0.2em]">
+      <footer className="w-full py-6 text-center border-t border-zinc-800/50 mt-auto relative z-10 bg-black/80 backdrop-blur-sm">
+        <p className="text-zinc-500 text-[10px] font-mono uppercase tracking-[0.2em]">
           HAWKINS NATIONAL LABORATORY • RESTRICTED ACCESS • 1986
         </p>
       </footer>
