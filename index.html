@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stranger Things Makeover</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              'stranger-red': '#E71D36',
+              'stranger-glow': '#ff3d57',
+              'stranger-black': '#050505',
+              'retro-blue': '#3A86FF',
+            },
+            fontFamily: {
+              serif: ['"Benguiat"', 'ITC Benguiat', 'Times New Roman', 'serif'],
+              mono: ['"Courier Prime"', 'Courier New', 'monospace'],
+              display: ['"Rubik Glitch"', 'cursive'],
+              painted: ['"Permanent Marker"', 'cursive'],
+            },
+            animation: {
+              'flicker': 'flicker 4s infinite',
+              'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+              'crt-scan': 'scanline 8s linear infinite',
+              'zoom-in': 'zoomIn 10s ease-out forwards',
+              'float': 'float 6s ease-in-out infinite',
+            },
+            keyframes: {
+              flicker: {
+                '0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 70%, 100%': { opacity: '1' },
+                '20%, 21.999%, 63%, 63.999%, 65%, 69.999%': { opacity: '0.4' },
+              },
+              scanline: {
+                '0%': { transform: 'translateY(-100%)' },
+                '100%': { transform: 'translateY(100%)' }
+              },
+              zoomIn: {
+                '0%': { transform: 'scale(1)' },
+                '100%': { transform: 'scale(1.1)' }
+              },
+              float: {
+                '0%, 100%': { transform: 'translateY(0)' },
+                '50%': { transform: 'translateY(-10px)' }
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <!-- Import Google Fonts for specific aesthetics -->
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Rubik+Glitch&family=Creepster&family=Permanent+Marker&display=swap');
+      
+      body {
+        background-color: #050505;
+        color: #e5e5e5;
+        overflow-x: hidden;
+      }
+
+      /* CRT Grain Effect */
+      .bg-grain {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 0;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      }
+
+      /* Scanline Effect */
+      .scanlines {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.1) 50%,
+          rgba(0,0,0,0.1)
+        );
+        background-size: 100% 4px;
+        z-index: 10;
+        pointer-events: none;
+      }
+
+      /* Stranger Things Title Font Simulation */
+      .font-stranger {
+        font-family: 'Times New Roman', serif;
+        font-weight: 900;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        -webkit-text-stroke: 1px #E71D36;
+        text-shadow: 
+          0 0 5px #E71D36,
+          0 0 10px #E71D36,
+          0 0 20px black;
+      }
+      
+      .text-glow {
+        text-shadow: 0 0 10px currentColor;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "lucide-react": "https://aistudiocdn.com/lucide-react@^0.554.0",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0"
+  }
+}
+</script>
+</head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>

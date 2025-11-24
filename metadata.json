@@ -1,0 +1,7 @@
+{
+  "name": "Stranger Things Makeover",
+  "description": "Transform yourself into a Hawkins resident with AI-powered Stranger Things themed makeovers.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
